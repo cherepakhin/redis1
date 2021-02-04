@@ -36,7 +36,7 @@ public class StudentCtrl {
             model.addAttribute(STUDENT_ATTR, student);
             return STUDENT_PAGE;
         }
-        LOG.info(student.toString());
+        LOG.info("{}",student);
         model.addAttribute(STUDENT_ATTR, student);
         return STUDENT_PAGE;
     }
