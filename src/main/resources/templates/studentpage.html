@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Тест Redis</title>
+    <link th:href="@{/css/bootstrap-superhero.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/sticky-footer-navbar.css}" rel="stylesheet"/>
+    <script th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/1.14.1/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div th:replace="layout :: header"></div>
+<main class="container py-3">
+    <h1>Тест сохранения объекта Student в hash Redis</h1>
+    <form th:action="@{/}" th:object="${student}" method="post">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="idLable">Id</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="idLable"
+                       th:field="*{id}"
+                       aria-describedby="descrId"
+                       th:classappend="${not #lists.isEmpty(#fields.errors('id'))} ? is-invalid"
+                       required
+                >
+                <small id="descrId" class="form-text invalid-feedback"
+                       th:if="${#fields.hasErrors('id')}" th:errors="*{id}"
+                ></small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="labelName">Имя</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="labelName"
+                       th:field="*{name}"
+                       aria-describedby="descrName"
+                       th:classappend="${not #lists.isEmpty(#fields.errors('name'))} ? is-invalid"
+                       required
+                >
+                <small id="descrName" class="form-text invalid-feedback"
+                       th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                ></small>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary my-2"
+                value="Submit">Сохранить
+        </button>
+    </form>
+    <h5
+            th:text="'Сохранено id:'+${student.id}+' name:'+${student.name}"></h5>
+
+</main>
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

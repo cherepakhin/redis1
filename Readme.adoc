@@ -1,0 +1,16 @@
+== Тест Redis
+
+Использованы Spring Boot (v2.2.4), Thymeleaf, Bootstrap 4
+
+Запуск
+
+[source,shell script]
+----
+git clone https://github.com/cherepakhin/redis1.git
+cd redis1
+mvn spring-boot:run
+----
+
+Перед тестом нужно запустить Redis на локальной машине: redis-server
+
+Проверить работу по адресу http://localhost:8080
