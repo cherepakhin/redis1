@@ -2,7 +2,7 @@
 
 Использованы Spring Boot (v2.2.4), Thymeleaf, Bootstrap 4
 
-Запуск
+=== Запуск
 
 [source,shell script]
 ----
@@ -14,3 +14,13 @@ mvn spring-boot:run
 Перед тестом нужно запустить Redis на локальной машине: redis-server
 
 Проверить работу по адресу http://localhost:8080
+
+=== Докеризация
+
+* _Dockerfile_ - настройка image docker
+* _create_docker_image.sh_ - создание docker image
+* _run_docker.sh_ - запуск docker image
+* _docker-compose.yaml_ - запуск проекта и redis сервера в docker (запуск #docker-compose up#).
+** Порт 8080 для проверки работы приложения
+** Порт 6379 - для доступа к redis-server
+* _push_docker_image.sh_ - экспорт в docker hub
