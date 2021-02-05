@@ -20,11 +20,13 @@ public class StudentCtrl {
     private static final Logger LOG = LoggerFactory.getLogger(StudentCtrl.class);
     private static final String STUDENT_PAGE = "studentpage";
     private static final String STUDENT_ATTR = "student";
+    private static final String STUDENT_RESULT_ATTR = "result_student";
 
     @GetMapping("/")
     public String start(Model model) {
         Student student = new Student();
         model.addAttribute(STUDENT_ATTR, student);
+        model.addAttribute(STUDENT_RESULT_ATTR, student);
         return STUDENT_PAGE;
     }
 
@@ -33,11 +35,14 @@ public class StudentCtrl {
             @ModelAttribute(STUDENT_ATTR) @Valid Student student,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            Student nullStudent = new Student();
             model.addAttribute(STUDENT_ATTR, student);
+            model.addAttribute(STUDENT_RESULT_ATTR, nullStudent);
             return STUDENT_PAGE;
         }
         LOG.info("{}",student);
         model.addAttribute(STUDENT_ATTR, student);
+        model.addAttribute(STUDENT_RESULT_ATTR, student);
         return STUDENT_PAGE;
     }
 }
