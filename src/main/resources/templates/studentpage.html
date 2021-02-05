@@ -48,8 +48,9 @@
                 value="Submit">Сохранить
         </button>
     </form>
+    <!--/*@thymesVar id="result" type="java.lang.String"*/-->
     <h5
-            th:text="'Сохранено id:'+${result_student.id}+' name:'+${result_student.name}"></h5>
+            th:text="${result}"></h5>
 
 </main>
 <div th:replace="layout :: footer"></div>
