@@ -14,8 +14,8 @@
 <body>
 <div th:replace="layout :: header"></div>
 <main class="container py-3">
-    <h1>Тест сохранения объекта Student в hash Redis</h1>
-    <form th:action="@{/}" th:object="${student}" method="post">
+    <h1>Тест сохранения объекта Student в Redis</h1>
+    <form action="#" th:action="@{/}" th:object="${student}" method="post">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="idLable">Id</label>
             <div class="col-sm-10">
@@ -45,7 +45,11 @@
             </div>
         </div>
         <button type="submit" class="btn btn-primary my-2"
-                value="Submit">Сохранить
+                value="SaveOverRepository">Сохранить через Repository
+        </button>
+        <button type="submit" class="btn btn-warning my-2"
+                th:formaction="'/save-over-template'"
+                value="SaveOverRedisTemplate">Сохранить через RedisTemplate
         </button>
     </form>
     <h5
