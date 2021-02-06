@@ -43,9 +43,7 @@ class StudentCtrlTest {
 
     @Test
     void save() throws Exception {
-        Student student = new Student();
-        student.setId(ID);
-        student.setName(NAME);
+        Student student = new Student(ID, NAME);
         when(studentService.getById(ID)).thenReturn(student);
         this.mockMvc.perform(post("/")
                 .accept(MediaType.TEXT_HTML)
@@ -64,9 +62,7 @@ class StudentCtrlTest {
 
     @Test
     void saveOnErrorId() throws Exception {
-        Student student = new Student();
-        student.setId(ID_ERROR);
-        student.setName(NAME);
+        Student student = new Student(ID_ERROR, NAME);
         this.mockMvc.perform(post("/")
                 .accept(MediaType.TEXT_HTML)
                 .param("id", String.valueOf(ID_ERROR))
@@ -83,9 +79,7 @@ class StudentCtrlTest {
 
     @Test
     void saveOnErrorName() throws Exception {
-        Student student = new Student();
-        student.setId(ID);
-        student.setName(NAME_ERROR);
+        Student student = new Student(ID, NAME_ERROR);
         this.mockMvc.perform(post("/")
                 .accept(MediaType.TEXT_HTML)
                 .param("id", String.valueOf(ID))
