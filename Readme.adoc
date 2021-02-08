@@ -24,3 +24,8 @@ mvn spring-boot:run
 ** Порт 8080 для проверки работы приложения
 ** Порт 6379 - для доступа к redis-server
 * _push_docker_image.sh_ - экспорт в docker hub
+
+=== Переменные окружения (enviropment)
+
+* _REDIS_HOST_ - адрес Redis сервиса. По умлчанию localhost
+* _REDIS_PORT_ - номер порта Redis сервиса. По умолчанию 6379
