@@ -29,3 +29,35 @@ mvn spring-boot:run
 
 * _REDIS_HOST_ - адрес Redis сервиса. По умлчанию localhost
 * _REDIS_PORT_ - номер порта Redis сервиса. По умолчанию 6379
+
+=== Kubernetes
+
+* kuber/redis1-deploy.yaml - манифест развертывания deployment сервиса и клиента Redis в Kubernetes
+
+Развертывание в Kubernetes
+[source,shell script]
+----
+kubectl apply -f kuber/redis1-deploy.yaml
+----
+
+Проверка работы сервера
+[source,shell script]
+----
+kubectl port-forward service/redis-service 6379
+$ redis-cli
+127.0.0.1:6379> keys *
+(empty list or set)
+127.0.0.1:6379> set k1 v1
+OK
+127.0.0.1:6379> get k1
+"v1"
+127.0.0.1:6379> exit
+----
+
+Проверка работы клиента
+[source,shell script]
+----
+kubectl port-forward service/redis-client-service 8080
+----
+
+Проверить работу по адресу http://localhost:8080

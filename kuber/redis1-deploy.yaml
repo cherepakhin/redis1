@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: List
+items:
+# Pod Redis server
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: redis-server
+    labels:
+      app: redis-server
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: redis-server
+    template:
+      metadata:
+        labels:
+          app: redis-server
+      spec:
+        containers:
+          - name: redis-server
+            image: redis
+            ports:
+              - containerPort: 6379
+
+# Redis service
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: redis-service
+  spec:
+    selector:
+      app: redis-server
+    ports:
+      - protocol: TCP
+        port: 6379
+        targetPort: 6379
+
+# Redis client
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: redis-client
+    labels:
+      app: redis-client
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: redis-client
+    template:
+      metadata:
+        labels:
+          app: redis-client
+      spec:
+        containers:
+          - name: redis-client
+            image: cherepakhin/redis1:latest
+            env:
+              - name: REDIS_HOST
+                value: redis-service
+              - name: REDIS_PORT
+                value: "6379"
+            ports:
+              - containerPort: 8080
+
+  # Redis  Client Service
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: redis-client-service
+  spec:
+    selector:
+      app: redis-client
+    ports:
+      - protocol: TCP
+        port: 8080
+        targetPort: 8080
