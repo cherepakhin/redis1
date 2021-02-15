@@ -61,3 +61,10 @@ kubectl port-forward service/redis-client-service 8080
 ----
 
 Проверить работу по адресу http://localhost:8080
+
+#### Развертывание через Helm
+
+[source,shell script]
+----
+$ helm template ./helm | k apply -f -
+----
