@@ -7,13 +7,22 @@ pipeline {
     }
 
   stages {
-    stage('Source') {
+    stage('Build') {
       steps {
-        git 'https://github.com/cherepakhin/redis1.git'
+        checkout scm
+        sh './mvn compile'
       }
     }
-
-    stage('test&package') {
+    stage('Test') {
+      steps {
+        sh './mvn test'
+        junit '**/target/surefire-reports/TEST-*.xml'
+      }
+    }
+    stage('Package') {
+      steps {
+        sh './mvn package -DskipTests'
+      }
       post {
         success {
           junit '**/target/surefire-reports/TEST-*.xml'
@@ -23,10 +32,6 @@ pipeline {
         }
 
       }
-      steps {
-        sh 'mvn clean package'
-      }
     }
-
   }
 }
