@@ -32,13 +32,9 @@ pipeline {
             post {
                 success {
                     archiveArtifacts 'target/*.war'
+                    mail(to: 'vasi.che@gmail.com', subject: "Успешная сборка: ${currentBuild.fullDisplayName}", body: "Ссылка на результат ${env.BUILD_URL}")
+                    sh "curl -T \"target/redis1##${VERSION}.war\" " + "\"http://deployer:pass@v.perm" + ".ru:8080/manager/text/deploy?path=/redis1&update=true\""
                 }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                mail(to: 'vasi.che@gmail.com', subject: "Успешная сборка: ${currentBuild.fullDisplayName}", body: "Ссылка на результат ${env.BUILD_URL}")
-                sh "curl -T \"target/redis1##${VERSION}.war\" " + "\"http://deployer:pass@v.perm" + ".ru:8080/manager/text/deploy?path=/redis1&update=true\""
             }
         }
     }
