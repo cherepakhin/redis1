@@ -45,13 +45,6 @@ pipeline {
                 sh './mvnw package -DskipTests'
             }
             post {
-                faulure {
-                    emailext body: "Ссылка на результат ${env.BUILD_URL}",
-                            recipientProviders: [buildUser()],
-                            subject: "Не собралось: ${currentBuild.fullDisplayName}",
-                            attachLog: true,
-                            compressLog: true
-                }
                 success {
                     archiveArtifacts 'target/*.war'
                     jacoco(
