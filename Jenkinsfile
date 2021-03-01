@@ -15,18 +15,18 @@ pipeline {
         stage('Build') {
             steps {
                 checkout scm
-                sh 'mvn compile'
+                sh './mvnw compile'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sh './mvnw test'
                 junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
         stage('Package') {
             steps {
-                sh 'mvn package -DskipTests'
+                sh './mvnw package -DskipTests'
             }
             post {
                 success {
