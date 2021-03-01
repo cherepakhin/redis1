@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
           image 'openjdk:11.0.5-slim'
-          args "-v $HOME/.m2:/root/.m2"
+          args '-v /root/.m2:/root/.m2'
         }
     }
 
@@ -38,7 +38,8 @@ pipeline {
                           sourcePattern: 'src/main/java',
                           exclusionPattern: 'src/test*'
                     )
-                    mail(to: 'vasi.che@gmail.com', subject: "Успешная сборка: ${currentBuild.fullDisplayName}", body: "Ссылка на результат ${env.BUILD_URL} ${env.CHANGE_AUTHOR_EMAIL} ${env.WORKSPACE} ${env.JENKINS_HOME} ${currentBuild.buildVariables}")
+                    emailext body: "Ссылка на результат ${env.BUILD_URL}", recipientProviders: [buildUser()], subject: "Успешная сборка: ${currentBuild.fullDisplayName}"
+//                     mail(to: 'vasi.che@gmail.com', subject: "Успешная сборка: ${currentBuild.fullDisplayName}", body: "Ссылка на результат ${env.BUILD_URL} ${env.CHANGE_AUTHOR_EMAIL} ${env.WORKSPACE} ${env.JENKINS_HOME} ${currentBuild.buildVariables}")
 //                     sh "curl -T \"target/redis1##${VERSION}.war\" \"http://deployer:pass@v.perm.ru:8080/manager/text/deploy?path=/redis1&update=true&version=${VERSION}\""
                 }
             }
