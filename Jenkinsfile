@@ -29,14 +29,12 @@ pipeline {
             when {
                 branch 'develop'
             }
-            post {
-                success {
-                    emailext body: "develop",
-                            recipientProviders: [buildUser()],
-                            subject: "Сборка develop",
-                            attachLog: true,
-                            compressLog: true
-                }
+            steps {
+                emailext body: "develop",
+                        recipientProviders: [buildUser()],
+                        subject: "Сборка develop",
+                        attachLog: true,
+                        compressLog: true
             }
         }
         stage('Package master') {
