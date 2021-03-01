@@ -38,8 +38,8 @@ pipeline {
                           sourcePattern: 'src/main/java',
                           exclusionPattern: 'src/test*'
                     )
-                    mail(to: 'vasi.che@gmail.com', subject: "Успешная сборка: ${currentBuild.fullDisplayName}", body: "Ссылка на результат ${env.BUILD_URL} ${env.BUILD_USER_EMAIL}")
-                    sh "curl -T \"target/redis1##${VERSION}.war\" \"http://deployer:pass@v.perm.ru:8080/manager/text/deploy?path=/redis1&update=true&version=${VERSION}\""
+                    mail(to: 'vasi.che@gmail.com', subject: "Успешная сборка: ${currentBuild.fullDisplayName}", body: "Ссылка на результат ${env.BUILD_URL} ${env.CHANGE_AUTHOR_EMAIL} ${env.WORKSPACE} ${env.JENKINS_HOME} ${currentBuild.buildVariables}")
+//                     sh "curl -T \"target/redis1##${VERSION}.war\" \"http://deployer:pass@v.perm.ru:8080/manager/text/deploy?path=/redis1&update=true&version=${VERSION}\""
                 }
             }
         }
