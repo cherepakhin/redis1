@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+          image 'openjdk:11.0.5-slim'
+          args '-v $HOME/.m2:/root/.m2'
+        }
+    }
 
     environment {
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
