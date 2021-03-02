@@ -30,7 +30,7 @@ pipeline {
                 branch 'develop'
             }
             steps {
-                emailext body: "develop",
+                emailext body: "Ссылка на результат ${env.BUILD_URL}",
                         recipientProviders: [buildUser()],
                         subject: "Сборка develop",
                         attachLog: true,
@@ -58,8 +58,6 @@ pipeline {
                             subject: "Успешная сборка: ${currentBuild.fullDisplayName}",
                             attachLog: true,
                             compressLog: true
-//                     mail(to: 'vasi.che@gmail.com', subject: "Успешная сборка: ${currentBuild.fullDisplayName}", body: "Ссылка на результат ${env.BUILD_URL} ${env.CHANGE_AUTHOR_EMAIL} ${env.WORKSPACE} ${env.JENKINS_HOME} ${currentBuild.buildVariables}")
-//                     sh "curl -T \"target/redis1##${VERSION}.war\" \"http://deployer:pass@v.perm.ru:8080/manager/text/deploy?path=/redis1&update=true&version=${VERSION}\""
                 }
             }
         }
