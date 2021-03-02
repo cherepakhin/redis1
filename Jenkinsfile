@@ -25,6 +25,21 @@ pipeline {
                 junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
+        stage('Sonar') {
+            steps {
+                sh './mvnw sonar:sonar -Dsonar.projectKey=redis1 -Dsonar.host.url=http://192.168.1.20:9000 -Dsonar.login=c0aa07efb2c715621712fc9add4738a90d6f7bef'
+            }
+        }
+        stage('JaCoCo') {
+            steps {
+                jacoco(
+                        execPattern: 'target/*.exec',
+                        classPattern: 'target/classes',
+                        sourcePattern: 'src/main/java',
+                        exclusionPattern: 'src/test*'
+                )
+            }
+        }
         stage('Package develop') {
             when {
                 branch 'develop'
@@ -44,22 +59,16 @@ pipeline {
             steps {
                 sh './mvnw package -DskipTests'
             }
-        }
-    }
-    post {
-        success {
-            archiveArtifacts 'target/*.war'
-            jacoco(
-                    execPattern: 'target/*.exec',
-                    classPattern: 'target/classes',
-                    sourcePattern: 'src/main/java',
-                    exclusionPattern: 'src/test*'
-            )
-            emailext body: "Ссылка на результат ${env.BUILD_URL}",
-                    recipientProviders: [buildUser()],
-                    subject: "Успешная сборка: ${currentBuild.fullDisplayName}",
-                    attachLog: true,
-                    compressLog: true
+            post {
+                success {
+                    archiveArtifacts 'target/*.war'
+                    emailext body: "Ссылка на результат ${env.BUILD_URL}",
+                            recipientProviders: [buildUser()],
+                            subject: "Успешная сборка: ${currentBuild.fullDisplayName}",
+                            attachLog: true,
+                            compressLog: true
+                }
+            }
         }
     }
 }
