@@ -30,7 +30,7 @@ pipeline {
                 branch 'develop'
             }
             steps {
-                emailext body: "Ссылка на результат ${env.BUILD_URL}",
+                emailext body: "Ссылка на результат ${env.BUILD_URL} hook1",
                         recipientProviders: [buildUser()],
                         subject: "Сборка develop",
                         attachLog: true,
