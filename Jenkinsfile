@@ -45,21 +45,21 @@ pipeline {
                 sh './mvnw package -DskipTests'
             }
         }
-        post {
-            success {
-                archiveArtifacts 'target/*.war'
-                jacoco(
-                        execPattern: 'target/*.exec',
-                        classPattern: 'target/classes',
-                        sourcePattern: 'src/main/java',
-                        exclusionPattern: 'src/test*'
-                )
-                emailext body: "Ссылка на результат ${env.BUILD_URL}",
-                        recipientProviders: [buildUser()],
-                        subject: "Успешная сборка: ${currentBuild.fullDisplayName}",
-                        attachLog: true,
-                        compressLog: true
-            }
+    }
+    post {
+        success {
+            archiveArtifacts 'target/*.war'
+            jacoco(
+                    execPattern: 'target/*.exec',
+                    classPattern: 'target/classes',
+                    sourcePattern: 'src/main/java',
+                    exclusionPattern: 'src/test*'
+            )
+            emailext body: "Ссылка на результат ${env.BUILD_URL}",
+                    recipientProviders: [buildUser()],
+                    subject: "Успешная сборка: ${currentBuild.fullDisplayName}",
+                    attachLog: true,
+                    compressLog: true
         }
     }
 }
