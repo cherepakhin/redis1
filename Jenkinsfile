@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'openjdk:11.0.5-slim'
+            image 'fabric8/java-alpine-openjdk11-jre'
             args "-v /root/.m2:/root/.m2"
         }
     }
@@ -67,6 +67,7 @@ pipeline {
                             subject: "Успешная сборка: ${currentBuild.fullDisplayName}",
                             attachLog: true,
                             compressLog: true
+                    sh "curl -T \"target/redis1##${VERSION}.war\" \"http://deployer:pass@v.perm.ru:8080/manager/text/deploy?path=/redis1&update=true&version=${VERSION}\""
                 }
             }
         }
