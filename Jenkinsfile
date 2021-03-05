@@ -23,13 +23,13 @@ pipeline {
             agent {
                 docker {
                     reuseNode true
-                    image 'openjdk:11.0-jdk-slim'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock --group-add 992'
+                    image 'maven:3'
+                    args "-v $PWD:$PWD -w $PWD -v /var/run/docker.sock:/var/run/docker.sock"
                 }
             }
 
             steps {
-                sh './mvnw test'
+                sh 'mvn test'
                 junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
