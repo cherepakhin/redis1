@@ -20,16 +20,8 @@ pipeline {
             }
         }
         stage('Test') {
-            agent {
-                docker {
-                    reuseNode true
-                    image 'maven:3'
-                    args "-v $PWD:$PWD -w $PWD -v /var/run/docker.sock:/var/run/docker.sock"
-                }
-            }
-
             steps {
-                sh 'mvn test'
+                sh "docker run -it --rm -v $PWD:$PWD -w $PWD -v /var/run/docker.sock:/var/run/docker.sock maven:3 mvn test"
                 junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
