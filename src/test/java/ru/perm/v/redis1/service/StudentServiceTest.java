@@ -9,7 +9,7 @@ import ru.perm.v.redis1.model.Student;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class StudentServiceTest extends AbstractContainerBaseTest {
+class StudentServiceTest extends AbstractContainerBaseTest {
 
     @Autowired
     StudentService studentService;
