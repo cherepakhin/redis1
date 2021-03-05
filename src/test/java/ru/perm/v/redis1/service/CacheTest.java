@@ -18,7 +18,7 @@ class CacheTest extends AbstractContainerBaseTest {
     }
 
     @Test
-    public void testSomeMethodUsingRedis() {
+    void testSomeMethodUsingRedis() {
         String KEY ="KEY";
         String VALUE ="VALUE";
         redisTemplate.opsForValue().set(KEY,VALUE);
