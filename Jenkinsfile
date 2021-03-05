@@ -22,8 +22,9 @@ pipeline {
         stage('Test') {
             agent {
                 docker {
-                    image 'fabric8/java-alpine-openjdk11-jre'
-                    args "-v $PWD:$PWD -w $PWD -v /var/run/docker.sock:/var/run/docker.sock"
+                    reuseNode true
+                    image 'openjdk:11.0-jdk-slim'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock --group-add 992'
                 }
             }
 
