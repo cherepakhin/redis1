@@ -25,7 +25,7 @@ pipeline {
                 docker {
                     reuseNode true
                     image 'maven:3'
-                    args "-v $PWD:$PWD -w $PWD -v /var/run/docker.sock:/var/run/docker.sock"
+                    args "-v /var/run/docker.sock:/var/run/docker.sock -v /root/.m2:/root/.m2"
                 }
             }
 
