@@ -22,7 +22,7 @@ pipeline {
 
             steps {
                 sh "echo $PWD"
-                sh 'mvn test'
+                sh './mvnw test'
                 junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
