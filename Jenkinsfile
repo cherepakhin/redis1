@@ -1,7 +1,9 @@
 pipeline {
     agent {
         docker {
-            image 'fabric8/java-alpine-openjdk11-jre'
+            reuseNode true
+            image 'maven:3'
+//            image 'fabric8/java-alpine-openjdk11-jre'
             args "-v /root/.m2:/root/.m2"
         }
     }
@@ -16,7 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 checkout scm
-                sh './mvnw compile'
+                sh 'mvn compile'
             }
         }
         stage('Test') {
