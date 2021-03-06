@@ -1,21 +1,12 @@
-agent {
-    reuseNode true
-    docker {
-        image 'maven:3'
-        args "-v /var/run/docker.sock:/var/run/docker.sock -v /root/.m2:/root/.m2"
-    }
-}
-
-//agent {
-//    docker {
-//        reuseNode true
-//        image 'fabric8/java-alpine-openjdk11-jre'
-//        args "-v /root/.m2:/root/.m2"
-//    }
-//}
 
 pipeline {
-    agent none
+    agent {
+        reuseNode true
+        docker {
+            image 'maven:3'
+            args "-v /var/run/docker.sock:/var/run/docker.sock -v /root/.m2:/root/.m2"
+        }
+    }
     environment {
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
         IMAGE = readMavenPom().getArtifactId()
