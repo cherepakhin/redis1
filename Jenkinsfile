@@ -1,11 +1,4 @@
 pipeline {
-    agent {
-        docker {
-            reuseNode true
-            image 'fabric8/java-alpine-openjdk11-jre'
-            args "-v /root/.m2:/root/.m2"
-        }
-    }
     environment {
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
         IMAGE = readMavenPom().getArtifactId()
@@ -14,6 +7,13 @@ pipeline {
 
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    reuseNode true
+                    image 'fabric8/java-alpine-openjdk11-jre'
+                    args "-v /root/.m2:/root/.m2"
+                }
+            }
             steps {
                 checkout scm
                 sh './mvnw compile'
@@ -35,11 +35,25 @@ pipeline {
             }
         }
         stage('Sonar') {
+            agent {
+                docker {
+                    reuseNode true
+                    image 'fabric8/java-alpine-openjdk11-jre'
+                    args "-v /root/.m2:/root/.m2"
+                }
+            }
             steps {
                 sh './mvnw sonar:sonar -Dsonar.projectKey=redis1 -Dsonar.host.url=http://192.168.1.20:9000 -Dsonar.login=c0aa07efb2c715621712fc9add4738a90d6f7bef'
             }
         }
         stage('JaCoCo') {
+            agent {
+                docker {
+                    reuseNode true
+                    image 'fabric8/java-alpine-openjdk11-jre'
+                    args "-v /root/.m2:/root/.m2"
+                }
+            }
             steps {
                 jacoco(
                         execPattern: 'target/*.exec',
@@ -50,6 +64,13 @@ pipeline {
             }
         }
         stage('Package develop') {
+            agent {
+                docker {
+                    reuseNode true
+                    image 'fabric8/java-alpine-openjdk11-jre'
+                    args "-v /root/.m2:/root/.m2"
+                }
+            }
             when {
                 branch 'develop'
             }
@@ -62,6 +83,13 @@ pipeline {
             }
         }
         stage('Package master') {
+            agent {
+                docker {
+                    reuseNode true
+                    image 'fabric8/java-alpine-openjdk11-jre'
+                    args "-v /root/.m2:/root/.m2"
+                }
+            }
             when {
                 branch 'master'
             }
