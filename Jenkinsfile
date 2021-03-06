@@ -1,10 +1,18 @@
 agent {
+    reuseNode true
     docker {
-        reuseNode true
-        image 'fabric8/java-alpine-openjdk11-jre'
-        args "-v /root/.m2:/root/.m2"
+        image 'maven:3'
+        args "-v /var/run/docker.sock:/var/run/docker.sock -v /root/.m2:/root/.m2"
     }
 }
+
+//agent {
+//    docker {
+//        reuseNode true
+//        image 'fabric8/java-alpine-openjdk11-jre'
+//        args "-v /root/.m2:/root/.m2"
+//    }
+//}
 
 pipeline {
     agent none
@@ -22,13 +30,6 @@ pipeline {
             }
         }
         stage('Test') {
-            agent {
-                reuseNode true
-                docker {
-                    image 'maven:3'
-                    args "-v /var/run/docker.sock:/var/run/docker.sock"
-                }
-            }
 
             steps {
                 sh "echo $PWD"
