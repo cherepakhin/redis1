@@ -1,5 +1,11 @@
 pipeline {
-    agent none
+    agent {
+        docker {
+            reuseNode true
+            image 'fabric8/java-alpine-openjdk11-jre'
+            args "-v /root/.m2:/root/.m2"
+        }
+    }
     environment {
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
         IMAGE = readMavenPom().getArtifactId()
@@ -7,13 +13,6 @@ pipeline {
     }
 
     stages {
-        agent {
-            docker {
-                reuseNode true
-                image 'fabric8/java-alpine-openjdk11-jre'
-                args "-v /root/.m2:/root/.m2"
-            }
-        }
         stage('Build') {
             steps {
                 checkout scm
