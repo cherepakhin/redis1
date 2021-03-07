@@ -21,7 +21,6 @@ pipeline {
         stage('Test') {
 
             steps {
-                sh "echo $PWD"
                 sh './mvnw test'
                 junit '**/target/surefire-reports/TEST-*.xml'
             }
@@ -58,6 +57,7 @@ pipeline {
                 branch 'master'
             }
             steps {
+                sh 'helm version'
                 sh './mvnw package -DskipTests'
             }
             post {
