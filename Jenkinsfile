@@ -1,11 +1,10 @@
 pipeline {
     agent {
-        docker {
-            image 'fabric8/java-alpine-openjdk11-jre'
-            args "-v /root/.m2:/root/.m2"
+        dockerfile {
+            filename 'Dockerfile.jenkins'
+            args "-v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock"
         }
     }
-
     environment {
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
         IMAGE = readMavenPom().getArtifactId()
@@ -20,16 +19,9 @@ pipeline {
             }
         }
         stage('Test') {
-            agent {
-                docker {
-                    reuseNode true
-                    image 'maven:3'
-                    args "-v $PWD:$PWD -w $PWD -v /var/run/docker.sock:/var/run/docker.sock"
-                }
-            }
 
             steps {
-                sh 'mvn test'
+                sh './mvnw test'
                 junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
@@ -65,6 +57,7 @@ pipeline {
                 branch 'master'
             }
             steps {
+                sh 'helm version'
                 sh './mvnw package -DskipTests'
             }
             post {
