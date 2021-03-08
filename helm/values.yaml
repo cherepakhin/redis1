@@ -1,6 +1,0 @@
-serverName: redis-server
-clientName: redis-client
-servicePort: "8080"
-image:
-  repository: cherepakhin/redis1
-  tag: latest
