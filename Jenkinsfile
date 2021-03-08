@@ -45,6 +45,7 @@ pipeline {
                 branch 'develop'
             }
             steps {
+                sh 'helm version'
                 emailext body: "Ссылка на результат ${env.BUILD_URL} develop hook2",
                         recipientProviders: [buildUser()],
                         subject: "Сборка develop",
