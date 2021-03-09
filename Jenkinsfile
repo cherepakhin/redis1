@@ -68,7 +68,7 @@ pipeline {
                 sh 'helm version'
                 sh './mvnw package -DskipTests'
                 script {
-                    def dockerImage = docker.build("${env.IMAGE_NAME}", "-f ${env.DOCKERFILE_NAME} .")
+                    def dockerImage = docker.build("cherepakhin/${env.IMAGE_NAME}", "-f ${env.DOCKERFILE_NAME} .")
                     docker.withRegistry('', 'docker_cherepakhin') {
                         dockerImage.push()
                         dockerImage.push("latest")
