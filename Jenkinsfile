@@ -4,6 +4,9 @@ pipeline {
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
         IMAGE_NAME = readMavenPom().getArtifactId()
         IMAGE_VERSION = readMavenPom().getVersion()
+        IMAGE_BASE="cherepakhin/$IMAGE_NAME"
+        DOCKER_IMAGE_NAME="$IMAGE_BASE:$IMAGE_VERSION"
+        DOCKER_IMAGE_NAME_LATEST="$IMAGE_BASE:latest"
         DOCKERFILE_NAME='Dockerfile'
     }
 
@@ -68,13 +71,14 @@ pipeline {
                 sh 'helm version'
                 sh './mvnw package -DskipTests'
                 script {
-                    def dockerImage = docker.build("cherepakhin/${env.IMAGE_NAME}", "-f ${env.DOCKERFILE_NAME} .")
+                    def dockerImage = docker.build("${env.DOCKER_IMAGE_NAME}", "-f ${env.DOCKERFILE_NAME} .")
                     docker.withRegistry('', 'docker_cherepakhin') {
                         dockerImage.push()
                         dockerImage.push("latest")
                     }
-                    echo "Pushed Docker Image: ${env.IMAGE_NAME}"
+                    echo "Pushed Docker Image: ${env.DOCKER_IMAGE_NAME}"
                 }
+                sh "docker rmi ${env.DOCKER_IMAGE_NAME} ${env.DOCKER_IMAGE_NAME_LATEST}"
             }
             post {
                 success {
