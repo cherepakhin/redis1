@@ -1,9 +1,9 @@
 pipeline {
-    agent none
+    agent any
     environment {
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
-        IMAGE_NAME = 'readMavenPom().getArtifactId()'
-        IMAGE_VERSION = 'readMavenPom().getVersion()'
+        IMAGE_NAME = readMavenPom().getArtifactId()
+        IMAGE_VERSION = readMavenPom().getVersion()
         DOCKERFILE_NAME='Dockerfile'
     }
 
