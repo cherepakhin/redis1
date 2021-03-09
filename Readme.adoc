@@ -68,3 +68,7 @@ kubectl port-forward service/redis-client-service 8080
 ----
 $ helm template ./helm | k apply -f -
 ----
+
+#### Jenkins
+
+Для развертывания в Jenkins сделан скорипт Jenkinsfile
