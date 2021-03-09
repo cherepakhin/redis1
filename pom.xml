@@ -11,11 +11,11 @@
     </parent>
     <groupId>ru.perm.v</groupId>
     <artifactId>redis1</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <name>redis1</name>
 
     <!--For create war-->
-    <packaging>war</packaging>
+<!--    <packaging>war</packaging>-->
 
     <description>Test project for Redis Spring Boot</description>
     <properties>

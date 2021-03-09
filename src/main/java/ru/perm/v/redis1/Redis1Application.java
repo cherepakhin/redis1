@@ -3,7 +3,7 @@ package ru.perm.v.redis1;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//@SpringBootApplication
+@SpringBootApplication
 public class Redis1Application {
 
     public static void main(String[] args) {
