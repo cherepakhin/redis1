@@ -98,7 +98,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                withKubeConfig([credentialsId: 'kuberid', serverUrl: "${KUBER_URL}", namespace: "${KUBER_NS_DEFAULT}"]) {
+                withKubeConfig([credentialsId: 'kuberid', serverUrl: "https://192.168.1.20", namespace: "default"]) {
                     sh "helm template ./helm | kubectl apply -f -"
                 }
             }
