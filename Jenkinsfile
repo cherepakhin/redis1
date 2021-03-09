@@ -92,5 +92,16 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to kubernetes') {
+            agent any
+            when {
+                branch 'master'
+            }
+            steps {
+                withKubeConfig([credentialsId: 'kuberid', serverUrl: "${KUBER_URL}", namespace: "${KUBER_NS_DEFAULT}"]) {
+                    sh "helm template ./helm | kubectl apply -f -"
+                }
+            }
+        }
     }
 }
