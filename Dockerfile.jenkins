@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11
+FROM fabric8/java-alpine-openjdk11-jre
 
 # Metadata
 LABEL org.opencontainers.image.title="lachlanevenson/k8s-helm" \
