@@ -82,13 +82,13 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts 'target/*.war'
+                    archiveArtifacts 'target/*.jar'
                     emailext body: "Ссылка на результат ${env.BUILD_URL}",
                             recipientProviders: [buildUser()],
                             subject: "Успешная сборка: ${currentBuild.fullDisplayName}",
                             attachLog: true,
                             compressLog: true
-                    sh "curl -T \"target/redis1##${VERSION}.war\" \"http://deployer:pass@v.perm.ru:8080/manager/text/deploy?path=/redis1&update=true&version=${VERSION}\""
+//                    sh "curl -T \"target/redis1##${VERSION}.war\" \"http://deployer:pass@v.perm.ru:8080/manager/text/deploy?path=/redis1&update=true&version=${VERSION}\""
                 }
             }
         }
