@@ -99,7 +99,7 @@ pipeline {
             }
             steps {
                 withKubeConfig([credentialsId: 'kuberid', serverUrl: "${KUBER_URL}", namespace: "${KUBER_NS_DEFAULT}"]) {
-                    sh "helm template ./helm | kubectl apply -f -"
+                    sh "helm template ./helm --set image.tag=${IMAGE_VERSION} | kubectl apply -f -"
                 }
             }
         }
