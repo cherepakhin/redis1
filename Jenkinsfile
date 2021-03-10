@@ -33,7 +33,11 @@ pipeline {
                 }
                 stage('Sonar') {
                     steps {
-                        sh './mvnw sonar:sonar -Dsonar.projectKey=redis1 -Dsonar.host.url=http://192.168.1.20:9000 -Dsonar.login=c0aa07efb2c715621712fc9add4738a90d6f7bef'
+                        withSonarQubeEnv('v.perm.ru', envOnly: true) {
+                            // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
+                            println ${env.SONAR_HOST_URL}
+                            sh "./mvnw sonar:sonar -Dsonar.projectKey=redis1 -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
+                        }
                     }
                 }
                 stage('JaCoCo') {
