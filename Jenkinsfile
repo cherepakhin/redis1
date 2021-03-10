@@ -31,23 +31,27 @@ pipeline {
                         junit '**/target/surefire-reports/TEST-*.xml'
                     }
                 }
-                stage('Sonar') {
-                    steps {
-                        withSonarQubeEnv('v.perm.ru') {
-                            // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
-                            echo env.SONAR_HOST_URL
-                            sh "./mvnw sonar:sonar -Dsonar.projectKey=redis1"
+                stage('Coverage') {
+                    parallel {
+                        stage('Sonar') {
+                            steps {
+                                withSonarQubeEnv('v.perm.ru') {
+                                    // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
+                                    echo env.SONAR_HOST_URL
+                                    sh "./mvnw sonar:sonar -Dsonar.projectKey=redis1"
+                                }
+                            }
                         }
-                    }
-                }
-                stage('JaCoCo') {
-                    steps {
-                        jacoco(
-                                execPattern: 'target/*.exec',
-                                classPattern: 'target/classes',
-                                sourcePattern: 'src/main/java',
-                                exclusionPattern: 'src/test*'
-                        )
+                        stage('JaCoCo') {
+                            steps {
+                                jacoco(
+                                        execPattern: 'target/*.exec',
+                                        classPattern: 'target/classes',
+                                        sourcePattern: 'src/main/java',
+                                        exclusionPattern: 'src/test*'
+                                )
+                            }
+                        }
                     }
                 }
             }
