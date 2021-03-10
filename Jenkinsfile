@@ -33,10 +33,10 @@ pipeline {
                 }
                 stage('Sonar') {
                     steps {
-                        withSonarQubeEnv('v.perm.ru', envOnly: true) {
+                        withSonarQubeEnv('v.perm.ru') {
                             // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
                             echo env.SONAR_HOST_URL
-                            sh "./mvnw sonar:sonar -Dsonar.projectKey=redis1 -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
+                            sh "./mvnw sonar:sonar -Dsonar.projectKey=redis1"
                         }
                     }
                 }
