@@ -15,7 +15,7 @@ pipeline {
             agent {
                 dockerfile {
                     filename 'Dockerfile.jenkins'
-                    args "-v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock"
+                    args "-v ~/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock"
                 }
             }
             stages {
